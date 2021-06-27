@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Library</title>
+  <link rel="stylesheet" href="library.css">
+  <script src="library_script.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+</head>
+<section id="library">
+    <div class="container">
+      <nav>
+        <h1>My &nbspLibrary</h1>
+        <ul>
+          <li>Home</li>
+          <li id="pop_up">Add Book + </li>
+        </ul>
+      
+      </nav>
+    </div>
+  </section>
+
+
+
+<!--Pop up Window for add books-->
+<div class="modal modal-hidden">
+    <div class="modal_content">
+        <div class="modal_close-bar">
+            <span>X</span>
+        </div>
+        <h3 id="modal_title">Add Your New Book</h3>
+        <form id="Add_Book">
+            <input type="text" placeholder="Title">
+            <input type="text" placeholder="Author">
+            <input type="number" placeholder="Total Pages">
+            <input type="number" placeholder="Completed Pages">
+            <button>Add</button>
+        </form>
+
+    </div>
+</div>
+
+
+<script>
+const toggleModal = () =>{
+    document.querySelector('.modal')
+    .classList.toggle('modal-hidden');
+}
+
+
+document.querySelector('#pop_up')
+.addEventListener('click', toggleModal);
+
+document.querySelector('#Add_Book')
+.addEventListener('submit',(event)=>{
+e.preventDefault(); toggleModal();
+});
+
+document.querySelector('.modal_close-bar span')
+.addEventListener('click',toggleModal);
+</script>
+
+
+
