@@ -20,6 +20,10 @@
       
       </nav>
     </div>
+    <div id="content" >
+
+        
+    </div>
   </section>
 
 
@@ -31,11 +35,11 @@
             <span>X</span>
         </div>
         <h3 id="modal_title">Add Your New Book</h3>
-        <form id="Add_Book">
-            <input type="text" placeholder="Title">
-            <input type="text" placeholder="Author">
-            <input type="number" placeholder="Total Pages">
-            <input type="number" placeholder="Completed Pages">
+        <form id="Add_Book" onsubmit="return false">
+            <input type="text" placeholder="Title" id="title">
+            <input type="text" placeholder="Author" id="Author">
+            <input type="number" placeholder="Total Pages" id="Total_Pages">
+            <input type="number" placeholder="Completed Pages" id="Completed_Pages">
             <button>Add</button>
         </form>
 
@@ -44,6 +48,10 @@
 
 
 <script>
+
+
+//Set up JS for open and close out pop-up modal
+
 const toggleModal = () =>{
     document.querySelector('.modal')
     .classList.toggle('modal-hidden');
@@ -51,16 +59,134 @@ const toggleModal = () =>{
 
 
 document.querySelector('#pop_up')
-.addEventListener('click', toggleModal);
+.addEventListener('click', (event)=>{
 
+document.getElementById('Add_Book').reset();
+
+toggleModal()
+
+});
+
+let myLibrary = [];
+var click_no=0;
+//Take Input start here:
 document.querySelector('#Add_Book')
 .addEventListener('submit',(event)=>{
-e.preventDefault(); toggleModal();
+//save to the []
+
+    addBookToLibrary()
+
+    var node = document.createElement("div");
+    node.setAttribute("id","formbox");
+    node.setAttribute("class","${click_no}")
+
+    var node_edit_all=document.createElement('div');
+    node_edit_all.setAttribute("id","edit_all");
+    node_edit_all.setAttribute("class","${click_no}")
+
+    var node_edit=document.createElement('div');
+    node_edit.setAttribute("id","edit");
+    node_edit.setAttribute("class","${click_no}");
+    var node_delete=document.createElement('div');
+    node_delete.setAttribute("class","delete");
+    node_delete.setAttribute('id',"del");
+
+
+    var node_title=document.createElement('div');
+    var node_author=document.createElement('div');
+    var node_totalpage=document.createElement('div');
+    var node_compage=document.createElement('div');
+
+
+    var node_edit_value=document.createTextNode("Edit")
+    var node_delete_value=document.createTextNode("Delete")
+
+
+    var titlenode=document.createTextNode(myLibrary[click_no].title);
+    var authornode=document.createTextNode(myLibrary[click_no].author);
+    var totalpage_node=document.createTextNode(myLibrary[click_no].total_pages);
+    var completedpages_node=document.createTextNode(myLibrary[click_no].completed_pages);
+
+
+    node_title.appendChild(titlenode);
+    node.appendChild(node_title);
+    node_author.appendChild(authornode);
+    node.appendChild(node_author);
+    node_totalpage.appendChild(totalpage_node)
+    node.appendChild(node_totalpage);
+    node_compage.appendChild(completedpages_node);
+    node.appendChild(node_compage);
+
+    node_delete.appendChild(node_delete_value);
+    node_edit.appendChild(node_edit_value);
+    node_edit_all.appendChild(node_delete);
+    node_edit_all.appendChild(node_edit)
+    node.appendChild(node_edit_all)
+
+
+
+    document.querySelector("#content").appendChild(node);
+
+    click_no=click_no+1;
+    toggleModal()
+
+    
+    node_delete.addEventListener('click',
+    function(e){
+        this.parentElement.parentElement.remove()   
+    },
+false);
 });
+
+//Take input ends here
+
+
+
+
+
 
 document.querySelector('.modal_close-bar span')
 .addEventListener('click',toggleModal);
+
+
+
+function removeDummy(e) {
+    var elem = document.getElementById('edit_all');
+    
+    elem.parentNode.removeChild(e);
+    return false;
+}
+
+
+
+
+function Book(title,author,total_pages,completed_pages) {
+  // the constructor...
+  this.title=title;
+  this.author=author;
+  this.total_pages=total_pages;
+  this.completed_pages=completed_pages
+}
+
+function addBookToLibrary() {
+  // do stuff here
+
+let your_title=document.querySelector('#title').value;
+let your_Author=document.querySelector('#Author').value;
+let your_Total_Pages=document.querySelector('#Total_Pages').value;
+let your_Completed_Pages=document.querySelector('#Completed_Pages').value;
+  
+  myLibrary.push(new Book(your_title,your_Author,your_Total_Pages,your_Completed_Pages))
+  
+  return myLibrary;
+}
+
+
+
+
+
 </script>
+
 
 
 
