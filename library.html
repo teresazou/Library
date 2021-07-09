@@ -78,34 +78,38 @@ document.querySelector('#Add_Book')
 
     var node = document.createElement("div");
     node.setAttribute("id","formbox");
-    node.setAttribute("class","${click_no}")
+    
 
     var node_edit_all=document.createElement('div');
     node_edit_all.setAttribute("id","edit_all");
-    node_edit_all.setAttribute("class","${click_no}")
+    
 
     var node_edit=document.createElement('div');
     node_edit.setAttribute("id","edit");
-    node_edit.setAttribute("class","${click_no}");
     var node_delete=document.createElement('div');
     node_delete.setAttribute("class","delete");
     node_delete.setAttribute('id',"del");
+    var no_see_node=document.createElement('div');
+    no_see_node.setAttribute("id","non_see_node")
 
 
     var node_title=document.createElement('div');
     var node_author=document.createElement('div');
     var node_totalpage=document.createElement('div');
     var node_compage=document.createElement('div');
-
+    
 
     var node_edit_value=document.createTextNode("Edit")
     var node_delete_value=document.createTextNode("Delete")
+    var count_node=document.createTextNode(click_no)
 
-
+   
     var titlenode=document.createTextNode(myLibrary[click_no].title);
     var authornode=document.createTextNode(myLibrary[click_no].author);
     var totalpage_node=document.createTextNode(myLibrary[click_no].total_pages);
     var completedpages_node=document.createTextNode(myLibrary[click_no].completed_pages);
+ 
+    
 
 
     node_title.appendChild(titlenode);
@@ -117,6 +121,8 @@ document.querySelector('#Add_Book')
     node_compage.appendChild(completedpages_node);
     node.appendChild(node_compage);
 
+    no_see_node.appendChild(count_node)
+    node_delete.appendChild(no_see_node)
     node_delete.appendChild(node_delete_value);
     node_edit.appendChild(node_edit_value);
     node_edit_all.appendChild(node_delete);
@@ -134,6 +140,13 @@ document.querySelector('#Add_Book')
     node_delete.addEventListener('click',
     function(e){
         this.parentElement.parentElement.remove()   
+        debugger;
+        test_classname = this.firstChild.innerText
+        myLibrary.splice(test_classname,1);
+        if(click_no==0){
+            click_no=0
+        }else{
+        click_no=click_no-1;}
     },
 false);
 });
@@ -150,12 +163,7 @@ document.querySelector('.modal_close-bar span')
 
 
 
-function removeDummy(e) {
-    var elem = document.getElementById('edit_all');
-    
-    elem.parentNode.removeChild(e);
-    return false;
-}
+
 
 
 

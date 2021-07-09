@@ -97,3 +97,7 @@ display:none;
 #edit{
 cursor: pointer;
 }
+
+#non_see_node{
+    display:none;
+}
