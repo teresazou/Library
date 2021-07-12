@@ -46,6 +46,24 @@
     </div>
 </div>
 
+<!--set up window for edit-->
+<div class="modal-edit modal-hidden">
+    <div class="modal_content">
+        <div class="modal_close-bar-edit">
+            <span>X</span>
+        </div>
+        <h3 id="modal_title">Edit Your Book</h3>
+        <form id="Add_Book_edit" onsubmit="return false">
+            <input type="text" placeholder="Title" id="title_edit">
+            <input type="text"  placeholder="Author"id="Author_edit">
+            <input type="number" placeholder="Total Pages" id="Total_Pages_edit">
+            <input type="number" placeholder="Completed Pages" id="Completed_Pages_edit">
+            <button id="save_edit" onclick=onclick_save()> Save</button>
+        </form>
+
+    </div>
+</div>
+
 
 <script>
 
@@ -57,6 +75,10 @@ const toggleModal = () =>{
     .classList.toggle('modal-hidden');
 }
 
+const toggleModal_edit=()=>{
+    document.querySelector('.modal-edit')
+    .classList.toggle('modal-hidden');
+}
 
 document.querySelector('#pop_up')
 .addEventListener('click', (event)=>{
@@ -66,6 +88,15 @@ document.getElementById('Add_Book').reset();
 toggleModal()
 
 });
+
+//Edit Pop up
+
+
+
+
+
+
+
 
 let myLibrary = [];
 var click_no=0;
@@ -78,12 +109,15 @@ document.querySelector('#Add_Book')
 
     var node = document.createElement("div");
     node.setAttribute("id","formbox");
+    node.setAttribute("class","formbox");
     
 
     var node_edit_all=document.createElement('div');
     node_edit_all.setAttribute("id","edit_all");
     
 
+    var node_save=document.createElement('div');
+    node_save.setAttribute('id',"save");
     var node_edit=document.createElement('div');
     node_edit.setAttribute("id","edit");
     var node_delete=document.createElement('div');
@@ -91,6 +125,8 @@ document.querySelector('#Add_Book')
     node_delete.setAttribute('id',"del");
     var no_see_node=document.createElement('div');
     no_see_node.setAttribute("id","non_see_node")
+    var no_see_node_2=document.createElement('div');
+    no_see_node_2.setAttribute("id","non_see_node_2")
 
 
     var node_title=document.createElement('div');
@@ -101,7 +137,9 @@ document.querySelector('#Add_Book')
 
     var node_edit_value=document.createTextNode("Edit")
     var node_delete_value=document.createTextNode("Delete")
+    var node_save_value=document.createTextNode('Save')
     var count_node=document.createTextNode(click_no)
+    var count_node_2=document.createTextNode(click_no)
 
    
     var titlenode=document.createTextNode(myLibrary[click_no].title);
@@ -111,7 +149,7 @@ document.querySelector('#Add_Book')
  
     
 
-
+    
     node_title.appendChild(titlenode);
     node.appendChild(node_title);
     node_author.appendChild(authornode);
@@ -122,18 +160,22 @@ document.querySelector('#Add_Book')
     node.appendChild(node_compage);
 
     no_see_node.appendChild(count_node)
-    node_delete.appendChild(no_see_node)
+    no_see_node_2.appendChild(count_node_2)
     node_delete.appendChild(node_delete_value);
+    node_delete.appendChild(no_see_node_2);
     node_edit.appendChild(node_edit_value);
+    node_edit.appendChild(no_see_node);
     node_edit_all.appendChild(node_delete);
     node_edit_all.appendChild(node_edit)
-    node.appendChild(node_edit_all)
+    node.appendChild(node_edit_all);
+    node_save.appendChild(node_save_value);
+    node_edit_all.appendChild(node_save);
 
 
 
     document.querySelector("#content").appendChild(node);
 
-    click_no=click_no+1;
+   
     toggleModal()
 
     
@@ -141,7 +183,8 @@ document.querySelector('#Add_Book')
     function(e){
         this.parentElement.parentElement.remove()   
         debugger;
-        test_classname = this.firstChild.innerText
+        test_classname = this.firstElementChild.innerText
+        debugger;
         myLibrary.splice(test_classname,1);
         if(click_no==0){
             click_no=0
@@ -149,20 +192,56 @@ document.querySelector('#Add_Book')
         click_no=click_no-1;}
     },
 false);
-});
-
-//Take input ends here
 
 
+  
+
+    node_edit.addEventListener('click',function(e){
+        save_for_edit=document.querySelector('#save_edit')
+        toggleModal_edit()
+        test_classname = this.firstElementChild.innerText
+        debugger
+        document.getElementById('title_edit').value=myLibrary[test_classname].title
+        document.getElementById('Author_edit').value=myLibrary[test_classname].author
+        document.getElementById('Total_Pages_edit').value=myLibrary[test_classname].total_pages
+        document.getElementById('Completed_Pages_edit').value=myLibrary[test_classname].completed_pages
+        
+        },
+    false);
+    
+
+    click_no=click_no+1;
+}); 
+
+function onclick_save (){
+    editBookinLibrary()
+            titlenode=document.createTextNode(myLibrary[test_classname].title);
+            authornode=document.createTextNode(myLibrary[test_classname].author);
+            totalpage_node=document.createTextNode(myLibrary[test_classname].total_pages);
+            completedpages_node=document.createTextNode(myLibrary[parseInt(test_classname)].completed_pages);
+            node_title=document.getElementsByClassName('formbox')[parseInt(test_classname)].firstElementChild
+            node_author=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[1]
+            node_totalpage=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[2]
+            node_compage=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[3]
+            node_title.innerText=titlenode.data;
+            node_author.innerText=authornode.data
+            node_totalpage.innerText=totalpage_node.data
+            node_compage.innerText=completedpages_node.data
+            debugger;
+            toggleModal_edit();
+}
 
 
 
+//close two x on the pop-up
 
 document.querySelector('.modal_close-bar span')
 .addEventListener('click',toggleModal);
 
 
 
+document.querySelector('.modal_close-bar-edit span')
+.addEventListener('click',toggleModal_edit);
 
 
 
@@ -182,11 +261,20 @@ function addBookToLibrary() {
 let your_title=document.querySelector('#title').value;
 let your_Author=document.querySelector('#Author').value;
 let your_Total_Pages=document.querySelector('#Total_Pages').value;
-let your_Completed_Pages=document.querySelector('#Completed_Pages').value;
+let your_Completed_Pages= document.querySelector('#Completed_Pages').value;
   
   myLibrary.push(new Book(your_title,your_Author,your_Total_Pages,your_Completed_Pages))
   
   return myLibrary;
+}
+
+function editBookinLibrary(){
+    let your_title=document.querySelector('#title_edit').value;
+    let your_Author=document.querySelector('#Author_edit').value;
+    let your_Total_Pages=document.querySelector('#Total_Pages_edit').value;
+    let your_Completed_Pages=document.querySelector('#Completed_Pages_edit').value;
+    myLibrary.splice(parseInt(test_classname),1,new Book(your_title,your_Author,your_Total_Pages,your_Completed_Pages))
+    debugger;
 }
 
 

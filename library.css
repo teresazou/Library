@@ -22,7 +22,7 @@ nav ul li{
     cursor: pointer;
 
 }
-.modal{
+.modal,.modal-edit{
     background-color: rgba(0,0,0,0.8);
     position:absolute;
     top:0;
@@ -32,6 +32,8 @@ nav ul li{
     justify-content: center;
     align-items: center;
 }
+
+
 .modal_content{
     background-color: white;
     padding:2rem 4rem;
@@ -40,7 +42,7 @@ nav ul li{
 #modal_title{
     font-family: 'Lato', sans-serif;
 }
-.modal_close-bar{
+.modal_close-bar,.modal_close-bar-edit{
     display: flex;
     justify-content: flex-end;
     margin-right: -2rem ;
@@ -82,10 +84,13 @@ display:none;
     justify-content: space-between;
     height:100px;
     padding: 10px;
-    border: 3px solid cadetblue;
+    border: 3px solid gold;
     row-gap: 4.5px;
     width: 200px;
     font-size: 1vw;
+}
+#formbox:hover{
+    background-color: rgb(190, 211, 75);
 }
 #edit_all{
     padding-top: inherit;
@@ -98,6 +103,13 @@ display:none;
 cursor: pointer;
 }
 
-#non_see_node{
+#del{
+    cursor: pointer;
+}
+#non_see_node,#non_see_node_2{
     display:none;
+}
+#save{
+    display:none;
+    cursor: pointer;
 }
