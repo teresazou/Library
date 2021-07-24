@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Library</title>
   <link rel="stylesheet" href="library.css">
-  <script src="library_script.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
@@ -14,7 +13,7 @@
       <nav>
         <h1>My &nbspLibrary</h1>
         <ul>
-          <li>Home</li>
+          <li id="home">Home</li>
           <li id="pop_up">Add Book + </li>
         </ul>
       
@@ -67,7 +66,125 @@
 
 <script>
 
+let myLibrary = [];
+window.addEventListener('load',(event)=>{
+    refresh();
+})
+window.addEventListener('click',(event)=>{
+    location.reload()
+})
+function refresh(){
+    var formbox=document.getElementsByClassName('formbox')
+    while(formbox.length > 0){
+        formbox[0].parentNode.removeChild(formbox[0]);
+    }
+    
+    if(!localStorage.getItem('library')){
+        console.log("anything")
+    }else{
+         myLibrary=getstorage();
+        for (let i = 0; i < myLibrary.length; i++) {
+            var node = document.createElement("div");
+            node.setAttribute("id","formbox");
+            node.setAttribute("class","formbox");
+    
 
+             var node_edit_all=document.createElement('div');
+            node_edit_all.setAttribute("id","edit_all");
+    
+
+             var node_save=document.createElement('div');
+             node_save.setAttribute('id',"save");
+             var node_edit=document.createElement('div');
+              node_edit.setAttribute("id","edit");
+            var node_delete=document.createElement('div');
+            node_delete.setAttribute("class","delete");
+              node_delete.setAttribute('id',"del");
+              var no_see_node=document.createElement('div');
+             no_see_node.setAttribute("id","non_see_node")
+              var no_see_node_2=document.createElement('div');
+              no_see_node_2.setAttribute("id","non_see_node_2")
+
+
+            var node_title=document.createElement('div');
+             var node_author=document.createElement('div');
+              var node_totalpage=document.createElement('div');
+              var node_compage=document.createElement('div');
+    
+
+             var node_edit_value=document.createTextNode("Edit")
+             var node_delete_value=document.createTextNode("Delete")
+             var node_save_value=document.createTextNode('Save')
+             var count_node=document.createTextNode(i)
+             var count_node_2=document.createTextNode(i)
+
+   
+             var titlenode=document.createTextNode(myLibrary[i].title);
+             var authornode=document.createTextNode(myLibrary[i].author);
+             var totalpage_node=document.createTextNode(myLibrary[i].total_pages);
+             var completedpages_node=document.createTextNode(myLibrary[i].completed_pages);
+ 
+    
+
+    
+            node_title.appendChild(titlenode);
+            node.appendChild(node_title);
+            node_author.appendChild(authornode);
+            node.appendChild(node_author);
+            node_totalpage.appendChild(totalpage_node)
+            node.appendChild(node_totalpage);
+            node_compage.appendChild(completedpages_node);
+            node.appendChild(node_compage);
+
+            no_see_node.appendChild(count_node)
+            no_see_node_2.appendChild(count_node_2)
+            node_delete.appendChild(node_delete_value);
+            node_delete.appendChild(no_see_node_2);
+            node_edit.appendChild(node_edit_value);
+            node_edit.appendChild(no_see_node);
+            node_edit_all.appendChild(node_delete);
+            node_edit_all.appendChild(node_edit)
+            node.appendChild(node_edit_all);
+            node_save.appendChild(node_save_value);
+            node_edit_all.appendChild(node_save);
+
+
+
+            document.querySelector("#content").appendChild(node);
+            node_delete.addEventListener('click',
+             function(e){
+                this.parentElement.parentElement.remove()   
+                test_classname = this.firstElementChild.innerText
+                myLibrary.splice(test_classname,1);
+                if(i==0){
+                    i=0
+                }else{
+                i=i-1;}
+                tostorage()
+                refresh();
+                },
+            false)
+
+            node_edit.addEventListener('click',function(e){
+            save_for_edit=document.querySelector('#save_edit')
+            toggleModal_edit()
+            test_classname = this.firstElementChild.innerText
+
+            document.getElementById('title_edit').value=myLibrary[test_classname].title
+            document.getElementById('Author_edit').value=myLibrary[test_classname].author
+            document.getElementById('Total_Pages_edit').value=myLibrary[test_classname].total_pages
+            document.getElementById('Completed_Pages_edit').value=myLibrary[test_classname].completed_pages
+        
+        },
+    false);
+        }
+
+    
+    }
+   
+
+
+}
 //Set up JS for open and close out pop-up modal
 
 const toggleModal = () =>{
@@ -98,7 +215,6 @@ toggleModal()
 
 
 
-let myLibrary = [];
 var click_no=0;
 //Take Input start here:
 document.querySelector('#Add_Book')
@@ -106,108 +222,18 @@ document.querySelector('#Add_Book')
 //save to the []
 
     addBookToLibrary()
-
-    var node = document.createElement("div");
-    node.setAttribute("id","formbox");
-    node.setAttribute("class","formbox");
-    
-
-    var node_edit_all=document.createElement('div');
-    node_edit_all.setAttribute("id","edit_all");
-    
-
-    var node_save=document.createElement('div');
-    node_save.setAttribute('id',"save");
-    var node_edit=document.createElement('div');
-    node_edit.setAttribute("id","edit");
-    var node_delete=document.createElement('div');
-    node_delete.setAttribute("class","delete");
-    node_delete.setAttribute('id',"del");
-    var no_see_node=document.createElement('div');
-    no_see_node.setAttribute("id","non_see_node")
-    var no_see_node_2=document.createElement('div');
-    no_see_node_2.setAttribute("id","non_see_node_2")
-
-
-    var node_title=document.createElement('div');
-    var node_author=document.createElement('div');
-    var node_totalpage=document.createElement('div');
-    var node_compage=document.createElement('div');
-    
-
-    var node_edit_value=document.createTextNode("Edit")
-    var node_delete_value=document.createTextNode("Delete")
-    var node_save_value=document.createTextNode('Save')
-    var count_node=document.createTextNode(click_no)
-    var count_node_2=document.createTextNode(click_no)
-
-   
-    var titlenode=document.createTextNode(myLibrary[click_no].title);
-    var authornode=document.createTextNode(myLibrary[click_no].author);
-    var totalpage_node=document.createTextNode(myLibrary[click_no].total_pages);
-    var completedpages_node=document.createTextNode(myLibrary[click_no].completed_pages);
- 
-    
-
-    
-    node_title.appendChild(titlenode);
-    node.appendChild(node_title);
-    node_author.appendChild(authornode);
-    node.appendChild(node_author);
-    node_totalpage.appendChild(totalpage_node)
-    node.appendChild(node_totalpage);
-    node_compage.appendChild(completedpages_node);
-    node.appendChild(node_compage);
-
-    no_see_node.appendChild(count_node)
-    no_see_node_2.appendChild(count_node_2)
-    node_delete.appendChild(node_delete_value);
-    node_delete.appendChild(no_see_node_2);
-    node_edit.appendChild(node_edit_value);
-    node_edit.appendChild(no_see_node);
-    node_edit_all.appendChild(node_delete);
-    node_edit_all.appendChild(node_edit)
-    node.appendChild(node_edit_all);
-    node_save.appendChild(node_save_value);
-    node_edit_all.appendChild(node_save);
-
-
-
-    document.querySelector("#content").appendChild(node);
+    refresh()
 
    
     toggleModal()
 
     
-    node_delete.addEventListener('click',
-    function(e){
-        this.parentElement.parentElement.remove()   
-        debugger;
-        test_classname = this.firstElementChild.innerText
-        debugger;
-        myLibrary.splice(test_classname,1);
-        if(click_no==0){
-            click_no=0
-        }else{
-        click_no=click_no-1;}
-    },
-false);
+    ;
 
 
   
 
-    node_edit.addEventListener('click',function(e){
-        save_for_edit=document.querySelector('#save_edit')
-        toggleModal_edit()
-        test_classname = this.firstElementChild.innerText
-        debugger
-        document.getElementById('title_edit').value=myLibrary[test_classname].title
-        document.getElementById('Author_edit').value=myLibrary[test_classname].author
-        document.getElementById('Total_Pages_edit').value=myLibrary[test_classname].total_pages
-        document.getElementById('Completed_Pages_edit').value=myLibrary[test_classname].completed_pages
-        
-        },
-    false);
+   
     
 
     click_no=click_no+1;
@@ -228,6 +254,7 @@ function onclick_save (){
             node_totalpage.innerText=totalpage_node.data
             node_compage.innerText=completedpages_node.data
             debugger;
+
             toggleModal_edit();
 }
 
@@ -264,7 +291,8 @@ let your_Total_Pages=document.querySelector('#Total_Pages').value;
 let your_Completed_Pages= document.querySelector('#Completed_Pages').value;
   
   myLibrary.push(new Book(your_title,your_Author,your_Total_Pages,your_Completed_Pages))
-  
+  tostorage()
+  debugger;
   return myLibrary;
 }
 
@@ -274,12 +302,22 @@ function editBookinLibrary(){
     let your_Total_Pages=document.querySelector('#Total_Pages_edit').value;
     let your_Completed_Pages=document.querySelector('#Completed_Pages_edit').value;
     myLibrary.splice(parseInt(test_classname),1,new Book(your_title,your_Author,your_Total_Pages,your_Completed_Pages))
+    tostorage()
     debugger;
 }
 
 
 
+function tostorage(){
+    const myJason=JSON.stringify(myLibrary);
+    localStorage.setItem("library",myJason)
+}
 
+function getstorage(){
+    let stored_library=localStorage.getItem('library')
+    return JSON.parse(stored_library);
+
+}
 
 </script>
 
