@@ -35,10 +35,14 @@
         </div>
         <h3 id="modal_title">Add Your New Book</h3>
         <form id="Add_Book" onsubmit="return false">
-            <input type="text" placeholder="Title" id="title">
+            <label for="title">Book Name:</label>
+            <input type="text" placeholder="Book Name" id="title">
+            <label for="author">Author:</label>
             <input type="text" placeholder="Author" id="Author">
+            <label for="total page">Total Pages:</label>
             <input type="number" placeholder="Total Pages" id="Total_Pages">
-            <input type="number" placeholder="Completed Pages" id="Completed_Pages">
+            <label for="com pg">Completed Pages:</label>
+            <input type="number" placeholder="Completed Pages" id="Completed_Pages"><br><br>
             <button>Add</button>
         </form>
 
@@ -53,10 +57,14 @@
         </div>
         <h3 id="modal_title">Edit Your Book</h3>
         <form id="Add_Book_edit" onsubmit="return false">
-            <input type="text" placeholder="Title" id="title_edit">
+            <label for="title">Book Name:</label>
+            <input type="text" placeholder="Book Name" id="title_edit">
+            <label for="author">Author:</label>
             <input type="text"  placeholder="Author"id="Author_edit">
+            <label for="total page">Total Pages:</label>
             <input type="number" placeholder="Total Pages" id="Total_Pages_edit">
-            <input type="number" placeholder="Completed Pages" id="Completed_Pages_edit">
+            <label for="com pg">Completed Pages:</label>
+            <input type="number" placeholder="Completed Pages" id="Completed_Pages_edit"><br><br>
             <button id="save_edit" onclick=onclick_save()> Save</button>
         </form>
 
@@ -73,6 +81,17 @@ window.addEventListener('load',(event)=>{
 window.addEventListener('click',(event)=>{
     //location.reload()
 })
+
+
+function signsmaker(){
+    var bookname_sign=document.createTextNode('Book Name:');
+    var bookname_container=document.createElement('div');
+    bookname_container.setAttribute("id","sign");
+    bookname_container.appendChild(bookname_sign);
+    node_title.appendChild(bookname_container);
+    return 
+}
+
 function refresh(){
     var formbox=document.getElementsByClassName('formbox')
     while(formbox.length > 0){
@@ -89,7 +108,7 @@ function refresh(){
             node.setAttribute("class","formbox");
     
 
-             var node_edit_all=document.createElement('div');
+            var node_edit_all=document.createElement('div');
             node_edit_all.setAttribute("id","edit_all");
     
 
@@ -107,9 +126,9 @@ function refresh(){
 
 
             var node_title=document.createElement('div');
-             var node_author=document.createElement('div');
-              var node_totalpage=document.createElement('div');
-              var node_compage=document.createElement('div');
+            var node_author=document.createElement('div');
+            var node_totalpage=document.createElement('div');
+            var node_compage=document.createElement('div');
     
 
              var node_edit_value=document.createTextNode("Edit")
@@ -124,16 +143,53 @@ function refresh(){
              var totalpage_node=document.createTextNode(myLibrary[i].total_pages);
              var completedpages_node=document.createTextNode(myLibrary[i].completed_pages);
  
-    
+             //set up signs for bookname,author,totalpage and completedpages
+             
+             var bookname_sign=document.createTextNode('Book Name:');
+             var bookname_container=document.createElement('div');
+             bookname_container.setAttribute("id","sign");
+             bookname_container.appendChild(bookname_sign);
+             node_title.appendChild(bookname_container);
 
-    
-            node_title.appendChild(titlenode);
+             var Author_sign=document.createTextNode('Author:');
+             var Author_container=document.createElement('div');
+             Author_container.setAttribute("id","sign");
+             Author_container.appendChild(Author_sign);
+             node_author.appendChild(Author_container);
+             
+             var totalpage_sign=document.createTextNode('Total Pages:');
+             var Totalpage_container=document.createElement('div');
+             Totalpage_container.setAttribute("id","sign");
+             Totalpage_container.appendChild(totalpage_sign);
+             node_totalpage.appendChild(Totalpage_container);
+
+             var comppage_sign=document.createTextNode('Completed Pages:');
+             var Comppage_container=document.createElement('div');
+             Comppage_container.setAttribute("id","sign");
+             Comppage_container.appendChild(comppage_sign);
+             node_compage.appendChild(Comppage_container);
+
+             //set up each book box shown on the homepage
+            var title_container=document.createElement('div');
+            title_container.appendChild(titlenode);
+            node_title.appendChild(title_container);
             node.appendChild(node_title);
-            node_author.appendChild(authornode);
+           
+            var author_container=document.createElement('div');
+            author_container.appendChild(authornode);
+            node_author.appendChild(author_container);
             node.appendChild(node_author);
-            node_totalpage.appendChild(totalpage_node)
-            node.appendChild(node_totalpage);
-            node_compage.appendChild(completedpages_node);
+
+
+            var totalpage_container=document.createElement('div');
+            totalpage_container.appendChild(totalpage_node);
+            node_totalpage.appendChild(totalpage_container);
+            node.appendChild(node_totalpage)
+           
+
+            var comppage_container=document.createElement('div');
+            comppage_container.appendChild(completedpages_node);
+            node_compage.appendChild(comppage_container);
             node.appendChild(node_compage);
 
             no_see_node.appendChild(count_node)
@@ -231,9 +287,6 @@ document.querySelector('#Add_Book')
     ;
 
 
-  
-
-   
     
 
     click_no=click_no+1;
@@ -245,15 +298,16 @@ function onclick_save (){
             authornode=document.createTextNode(myLibrary[test_classname].author);
             totalpage_node=document.createTextNode(myLibrary[test_classname].total_pages);
             completedpages_node=document.createTextNode(myLibrary[parseInt(test_classname)].completed_pages);
-            node_title=document.getElementsByClassName('formbox')[parseInt(test_classname)].firstElementChild
-            node_author=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[1]
-            node_totalpage=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[2]
-            node_compage=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[3]
+            node_title=document.getElementsByClassName('formbox')[parseInt(test_classname)].firstElementChild.children[1]
+            node_author=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[1].children[1]
+            node_totalpage=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[2].children[1]
+            node_compage=document.getElementsByClassName('formbox')[parseInt(test_classname)].children[3].children[1]
+            
             node_title.innerText=titlenode.data;
             node_author.innerText=authornode.data
             node_totalpage.innerText=totalpage_node.data
             node_compage.innerText=completedpages_node.data
-            debugger;
+            
 
             toggleModal_edit();
 }
@@ -292,7 +346,6 @@ let your_Completed_Pages= document.querySelector('#Completed_Pages').value;
   
   myLibrary.push(new Book(your_title,your_Author,your_Total_Pages,your_Completed_Pages))
   tostorage()
-  debugger;
   return myLibrary;
 }
 
@@ -303,7 +356,7 @@ function editBookinLibrary(){
     let your_Completed_Pages=document.querySelector('#Completed_Pages_edit').value;
     myLibrary.splice(parseInt(test_classname),1,new Book(your_title,your_Author,your_Total_Pages,your_Completed_Pages))
     tostorage()
-    debugger;
+    
 }
 
 
