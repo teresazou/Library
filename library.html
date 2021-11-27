@@ -83,14 +83,6 @@ window.addEventListener('click',(event)=>{
 })
 
 
-function signsmaker(){
-    var bookname_sign=document.createTextNode('Book Name:');
-    var bookname_container=document.createElement('div');
-    bookname_container.setAttribute("id","sign");
-    bookname_container.appendChild(bookname_sign);
-    node_title.appendChild(bookname_container);
-    return 
-}
 
 function refresh(){
     var formbox=document.getElementsByClassName('formbox')
@@ -101,7 +93,8 @@ function refresh(){
     if(!localStorage.getItem('library')){
         console.log("anything")
     }else{
-         myLibrary=getstorage();
+         myLibrary=getstorage(); //pipeline data in the localstorage to the array mylibrary
+
         for (let i = 0; i < myLibrary.length; i++) {
             var node = document.createElement("div");
             node.setAttribute("id","formbox");
@@ -110,38 +103,41 @@ function refresh(){
 
             var node_edit_all=document.createElement('div');
             node_edit_all.setAttribute("id","edit_all");
-    
+             
 
-             var node_save=document.createElement('div');
-             node_save.setAttribute('id',"save");
-             var node_edit=document.createElement('div');
-              node_edit.setAttribute("id","edit");
+            var node_save=document.createElement('div');
+            node_save.setAttribute('id',"save");
+            var node_edit=document.createElement('div');
+            node_edit.setAttribute("id","edit");
             var node_delete=document.createElement('div');
             node_delete.setAttribute("class","delete");
-              node_delete.setAttribute('id',"del");
-              var no_see_node=document.createElement('div');
-             no_see_node.setAttribute("id","non_see_node")
-              var no_see_node_2=document.createElement('div');
-              no_see_node_2.setAttribute("id","non_see_node_2")
+            node_delete.setAttribute('id',"del");
+            var no_see_node=document.createElement('div');
+            no_see_node.setAttribute("id","non_see_node") //for deletion and edition purpose
+            var no_see_node_2=document.createElement('div');
+            no_see_node_2.setAttribute("id","non_see_node_2")//for deletion and edition purpose
 
 
             var node_title=document.createElement('div');
             var node_author=document.createElement('div');
             var node_totalpage=document.createElement('div');
             var node_compage=document.createElement('div');
-    
+            node_author.setAttribute("id",'item')
+            node_title.setAttribute("id",'item')
+            node_totalpage.setAttribute("id",'item')
+            node_compage.setAttribute("id",'item')
 
-             var node_edit_value=document.createTextNode("Edit")
-             var node_delete_value=document.createTextNode("Delete")
-             var node_save_value=document.createTextNode('Save')
-             var count_node=document.createTextNode(i)
-             var count_node_2=document.createTextNode(i)
+            var node_edit_value=document.createTextNode("Edit")
+            var node_delete_value=document.createTextNode("Delete")
+            var node_save_value=document.createTextNode('Save')
+            var count_node=document.createTextNode(i)
+            var count_node_2=document.createTextNode(i)
 
    
-             var titlenode=document.createTextNode(myLibrary[i].title);
-             var authornode=document.createTextNode(myLibrary[i].author);
-             var totalpage_node=document.createTextNode(myLibrary[i].total_pages);
-             var completedpages_node=document.createTextNode(myLibrary[i].completed_pages);
+            var titlenode=document.createTextNode(myLibrary[i].title);
+            var authornode=document.createTextNode(myLibrary[i].author);
+            var totalpage_node=document.createTextNode(myLibrary[i].total_pages);
+            var completedpages_node=document.createTextNode(myLibrary[i].completed_pages);
  
              //set up signs for bookname,author,totalpage and completedpages
              
@@ -205,19 +201,24 @@ function refresh(){
             node_edit_all.appendChild(node_save);
 
 
-
+        
             document.querySelector("#content").appendChild(node);
             node_delete.addEventListener('click',
              function(e){
-                this.parentElement.parentElement.remove()   
+                this.parentElement.parentElement.remove()  
                 test_classname = this.firstElementChild.innerText
+                
                 myLibrary.splice(test_classname,1);
+                
                 if(i==0){
                     i=0
                 }else{
                 i=i-1;}
+                
                 tostorage()
+                
                 refresh();
+
                 },
             false)
 
@@ -276,10 +277,10 @@ var click_no=0;
 document.querySelector('#Add_Book')
 .addEventListener('submit',(event)=>{
 //save to the []
-
+    
     addBookToLibrary()
+    
     refresh()
-
    
     toggleModal()
 

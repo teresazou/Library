@@ -87,20 +87,19 @@ display:none;
     justify-content: space-between;
     
     padding: 10px;
-    border: 3px solid gold;
+   
     row-gap: 4.5px;
     width: 200px;
     font-size: 10px;
 }
-#formbox:hover{
-    background-color: rgb(190, 211, 75);
-}
+
 #edit_all{
     padding-top: inherit;
     display: flex;
     justify-content: space-between;
 
 }
+
 
 #edit{
 cursor: pointer;
@@ -120,4 +119,9 @@ cursor: pointer;
 #sign{
     color:orange;
     font-weight:bold;
+}
+#item:hover{
+    font-size:15px;
+    
+
 }
